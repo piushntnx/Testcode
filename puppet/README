@@ -6,6 +6,13 @@ These testcodes are to check concurrency in puppet apply.
 4. Go to manifest directory and execute run.sh,
 5. Check the puppet log in /tmp/puppetlog file and output of successful execution in /tmp/new. 
 
+Here we are running 5 puppet apply concurrently and each of them are executing their own bash scripts. But all of their bash scripts take lock on a common 
+file /tmp/templock. So, each of these puppet apply will have to wait for the lock and then complete their execution. 
+
+Observation: No puppet appply fails as it does in the puppet ticket: https://tickets.puppetlabs.com/si/jira.issueviews:issue-html/PUP-5609/PUP-5609.html saying:
+"Notice: Run of Puppet already in progress; skipping  (/opt/puppetlabs/puppet/cache/state/agent_catalog_run.lock exists)"
+
+
 Content of /tmp/new should look like:
 Fri May 21 21:30:55 UTC 2021 : Test2
 Fri May 21 21:31:05 UTC 2021 : Test1
