@@ -1,1 +1,31 @@
+These testcodes are to check concurrency in puppet apply.
 
+1. Download run.sh and the manifest files i.e. .pp files in the manifest directory,
+2. Download the test*.sh scripts in /tmp/ directory,
+3. Create an empty file: /tmp/templock,
+4. Go to manifest directory and execute run.sh,
+5. Check the puppet log in /tmp/puppetlog file and output of successful execution in /tmp/new. 
+
+Content of /tmp/new should look like:
+Fri May 21 21:30:55 UTC 2021 : Test2
+Fri May 21 21:31:05 UTC 2021 : Test1
+Fri May 21 21:31:15 UTC 2021 : Test4
+Fri May 21 21:31:25 UTC 2021 : Test3
+Fri May 21 21:31:35 UTC 2021 : Test5
+
+Output in /tmp/puppetlog should look like:
+2021-05-21 21:30:55 +0000 Puppet (notice): Compiled catalog for danica1-2 in environment production in 0.15 seconds
+2021-05-21 21:30:55 +0000 Puppet (notice): Compiled catalog for danica1-2 in environment production in 0.21 seconds
+2021-05-21 21:30:55 +0000 Puppet (notice): Compiled catalog for danica1-2 in environment production in 0.20 seconds
+2021-05-21 21:30:55 +0000 Puppet (notice): Compiled catalog for danica1-2 in environment production in 0.14 seconds
+2021-05-21 21:30:55 +0000 Puppet (notice): Compiled catalog for danica1-2 in environment production in 0.16 seconds
+2021-05-21 21:31:05 +0000 /Stage[main]/Main/Exec[run_my_script]/returns (notice): executed successfully
+2021-05-21 21:31:05 +0000 Puppet (notice): Finished catalog run in 10.08 seconds
+2021-05-21 21:31:15 +0000 /Stage[main]/Main/Exec[run_my_script]/returns (notice): executed successfully
+2021-05-21 21:31:15 +0000 Puppet (notice): Finished catalog run in 19.98 seconds
+2021-05-21 21:31:25 +0000 /Stage[main]/Main/Exec[run_my_script]/returns (notice): executed successfully
+2021-05-21 21:31:25 +0000 Puppet (notice): Finished catalog run in 29.99 seconds
+2021-05-21 21:31:35 +0000 /Stage[main]/Main/Exec[run_my_script]/returns (notice): executed successfully
+2021-05-21 21:31:35 +0000 Puppet (notice): Finished catalog run in 39.92 seconds
+2021-05-21 21:31:45 +0000 /Stage[main]/Main/Exec[run_my_script]/returns (notice): executed successfully
+2021-05-21 21:31:45 +0000 Puppet (notice): Finished catalog run in 49.92 seconds
