@@ -1,10 +1,9 @@
 These testcodes are to check concurrency in puppet apply.
 
-1. Download run.sh and the manifest files i.e. .pp files in the manifest directory,
-2. Download the test*.sh scripts in /tmp/ directory,
-3. Create an empty file: /tmp/templock,
-4. Go to manifest directory and execute run.sh,
-5. Check the puppet log in /tmp/puppetlog file and output of successful execution in /tmp/new. 
+1. Download all the files on an AHV host
+2. Run setup.sh script to copy the files to the right directories
+3. Run run.sh script to execute parallel concurrent "puppet apply"
+4. Check the puppet log in /tmp/puppetlog file and output of successful execution in /tmp/new. 
 
 Here we are running 5 puppet apply concurrently and each of them are executing their own bash scripts. But all of their bash scripts take lock on a common 
 file /tmp/templock. So, each of these puppet apply will have to wait for the lock and then complete their execution. 
