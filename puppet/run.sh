@@ -1,4 +1,4 @@
 for i in {1..5}
 do
-  puppet apply test${i}.pp --logdest /tmp/puppetlog &
+  puppet apply /etc/puppet/modules/kvm/manifests/test${i}.pp --logdest /tmp/puppetlog &
 done
